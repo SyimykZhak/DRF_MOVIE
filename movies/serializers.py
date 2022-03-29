@@ -41,11 +41,21 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = ("name", "text", "children")
 
+class ActorListSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = Actor
+        fields = ("id", "name", "image")
+
+class ActorDetailSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = Actor
+        fields = ("__all__")
+
 
 class MovieDetailSerializers(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(slug_field="name", read_only = True)
-    directors = serializers.SlugRelatedField(slug_field="name", read_only = True, many = True)
-    actors = serializers.SlugRelatedField(slug_field="name", read_only = True, many = True)
+    directors = ActorListSerializer(read_only = True, many = True)
+    actors = ActorListSerializer(read_only = True, many = True)
     genres = serializers.SlugRelatedField(slug_field="name", read_only = True, many = True)
     reviews =ReviewCreateSerializer(many=True)
     
@@ -66,3 +76,5 @@ class CreateRatingSerializer(serializers.ModelSerializer):
             defaults={'star': validated_data.get("star")}
         )
         return rating
+
+
