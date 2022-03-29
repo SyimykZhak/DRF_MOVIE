@@ -16,7 +16,7 @@ class RecursiveSerializer(serializers.Serializer):
         return serializer.data
 
 class MovieListSerializers(serializers.ModelSerializer):
-    """Список фильмов"""
+    #   Список фильмов
     rating_user = serializers.BooleanField()
     middle_star = serializers.IntegerField()
 
@@ -64,13 +64,13 @@ class MovieDetailSerializers(serializers.ModelSerializer):
         exclude = ("draft",)
 
 class CreateRatingSerializer(serializers.ModelSerializer):
-    """Добавление рейтинга пользователем"""
+    # Добавление рейтинга пользователем
     class Meta:
         model = Rating
         fields = ("star", "movie")
 
     def create(self, validated_data):
-        rating = Rating.objects.update_or_create(
+        rating, _ = Rating.objects.update_or_create(
             ip=validated_data.get('ip', None),
             movie=validated_data.get('movie', None),
             defaults={'star': validated_data.get("star")}
