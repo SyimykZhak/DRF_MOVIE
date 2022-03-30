@@ -6,14 +6,15 @@ from .serializers import (
 MovieListSerializers, MovieDetailSerializers, 
 ReviewCreateSerializer, CreateRatingSerializer,
 ActorListSerializer, ActorDetailSerializer)
-from .service import get_client_ip, MovieFilter
+from .service import get_client_ip, MovieFilter, PaginationMovie
 
 
 class MovieViewSet(viewsets.ReadOnlyModelViewSet):
     # Вывод списка фильмов
     filter_backends = (DjangoFilterBackend,)
     filterset_class = MovieFilter
-
+    pagination_class = PaginationMovie
+    
     def get_queryset(self):
         movies = Movie.objects.filter(draft=False).annotate(
             rating_user=models.Count("ratings",
