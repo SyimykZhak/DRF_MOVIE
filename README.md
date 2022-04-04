@@ -1,7 +1,7 @@
 "# DRF_course" 
 # Кинобиблиотека на Django Rest Framework.
 
-Проект написан в рамках обучающего курса по Django Rest Framework на youtube.
+Проект написан в рамках обучающего курса по Django Rest Framework.
 
 1. Категории
 2. Жанры
